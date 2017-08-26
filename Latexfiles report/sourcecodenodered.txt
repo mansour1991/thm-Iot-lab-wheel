@@ -1,0 +1,113 @@
+[
+    {
+        "id": "a4f27947.c4f0b8",
+        "type": "sensorTag",
+        "z": "c690242a.15d058",
+        "name": "",
+        "topic": "sensorTag",
+        "uuid": "",
+        "temperature": false,
+        "humidity": false,
+        "pressure": false,
+        "magnetometer": true,
+        "accelerometer": true,
+        "gyroscope": true,
+        "keys": false,
+        "luxometer": false,
+        "x": 189,
+        "y": 191,
+        "wires": [
+            [
+                "8c12001a.4cddf"
+            ]
+        ]
+    },
+    {
+        "id": "3a465523.35244a",
+        "type": "debug",
+        "z": "c690242a.15d058",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 559,
+        "y": 163,
+        "wires": []
+    },
+    {
+        "id": "8c12001a.4cddf",
+        "type": "function",
+        "z": "c690242a.15d058",
+        "name": "Timestamping",
+        "func": "function addZero(x, n) {\n    while (x.toString().length < n) {\n        x = \"0\" + x;\n    }\n    return x;\n}\n\nvar d = new Date();\nvar h = addZero(d.getHours(), 2);\nvar m = addZero(d.getMinutes(), 2);\nvar s = addZero(d.getSeconds(), 2);\nvar ms = addZero(d.getMilliseconds(), 3);\nmsg.payload =   \"x: \"+ msg.payload.x\n            + \"; y: \"+ msg.payload.y\n            + \"; z: \"+ msg.payload.z\n            + \"; Time: \" + h + \":\"\n            + m + \":\" + s + \":\" + ms;\n\nreturn msg;\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 385,
+        "y": 191,
+        "wires": [
+            [
+                "3a465523.35244a",
+                "1e0b149e.a5495b",
+                "b779960b.0d7d98",
+                "37ed6c37.f42e54"
+            ]
+        ]
+    },
+    {
+        "id": "1e0b149e.a5495b",
+        "type": "mqtt out",
+        "z": "c690242a.15d058",
+        "name": "",
+        "topic": "sensortag",
+        "qos": "",
+        "retain": "",
+        "broker": "da700779.10d088",
+        "x": 568,
+        "y": 219,
+        "wires": []
+    },
+    {
+        "id": "b779960b.0d7d98",
+        "type": "mqtt out",
+        "z": "c690242a.15d058",
+        "name": "",
+        "topic": "iot_lab/wheel/sensortag",
+        "qos": "",
+        "retain": "",
+        "broker": "da700779.10d088",
+        "x": 631,
+        "y": 288,
+        "wires": []
+    },
+    {
+        "id": "37ed6c37.f42e54",
+        "type": "mqtt out",
+        "z": "c690242a.15d058",
+        "name": "",
+        "topic": "iot_lab/wheel/sensortag",
+        "qos": "",
+        "retain": "",
+        "broker": "da700779.10d088",
+        "x": 644,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "da700779.10d088",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    }
+]
